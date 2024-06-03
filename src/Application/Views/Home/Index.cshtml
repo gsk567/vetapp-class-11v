@@ -1,0 +1,12 @@
+﻿@model HomeViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    @{
+        var fullName = $"{Model.FirstName} {Model.LastName}";
+    }
+    <h1 class="display-4">@fullName</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
