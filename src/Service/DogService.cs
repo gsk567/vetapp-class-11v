@@ -5,20 +5,34 @@ using Data;
 
 namespace Service;
 
-public class DogService : IDogService
+internal class DogService : IDogService
 {
-    private readonly IDogRepository dogRepository;
+    private readonly EntityContext context;
 
-    public DogService(IDogRepository dogRepository)
+    public DogService(EntityContext context)
     {
-        this.dogRepository = dogRepository;
+        this.context = context;
     }
-    
+
+    public long CreateRandomDog()
+    {
+        var dog = new Dog
+        {
+            Name = Guid.NewGuid().ToString(),
+            DateOfBirth = DateOnly.FromDateTime(DateTime.Now),
+            Breed = DogBreed.Akita,
+
+        };
+        
+        this.context.Dogs.Add(dog);
+        this.context.SaveChanges();
+        return dog.Id;
+    }
+
     public IEnumerable<DogModel> FetchDogs()
     {
         var nowYear = DateTime.Now.Year;
-        var dogs = this.dogRepository.FetchDogs();
-        return dogs.Select(x => new DogModel
+        return this.context.Dogs.Select(x => new DogModel
         {
             Id = x.Id,
             Name = x.Name,

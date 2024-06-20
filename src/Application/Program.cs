@@ -9,12 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-// builder.Services.AddSingleton<IDogRepository, DogRepository>();
-// builder.Services.AddScoped<IDogRepository, DogRepository>();
-builder.Services.AddTransient<IDogRepository, DogRepository>(); 
-    
-// builder.Services.AddScoped<IDogRepository, DogRepository>();
-builder.Services.AddScoped<IDogService, DogService>();
+builder.Services.AddData();
+builder.Services.AddServices();
 
 builder.Services.AddMvc();
 var app = builder.Build();

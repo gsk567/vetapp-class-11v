@@ -1,11 +1,12 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Data;
 
 public class Dog
 {
     public long Id { get; set; }
-    
+
     public string Name { get; set; }
 
     public DateOnly DateOfBirth { get; set; }

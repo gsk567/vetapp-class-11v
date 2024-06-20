@@ -11,17 +11,16 @@ namespace Application.Controllers;
 public class HomeController : Controller
 {
     private readonly IDogService dogService;
-    private readonly IDogRepository dogRepository;
 
-    public HomeController(IDogService dogService, IDogRepository dogRepository)
+    public HomeController(IDogService dogService)
     {
         this.dogService = dogService;
-        this.dogRepository = dogRepository;
     }
 
     [HttpGet("/")]
     public IActionResult Index()
     {
+        this.dogService.CreateRandomDog();
         var obj = new HomeViewModel { FirstName = "Pesho", LastName = "Ivanov" };
         return View(obj);
     }
@@ -29,14 +28,7 @@ public class HomeController : Controller
     [HttpGet("/dogs")]
     public IActionResult Dogs()
     {
-        var dogsNames = new List<string>();
-        var dogsFromRepository = this.dogRepository.FetchDogs();
-        var dogsFromService = this.dogService.FetchDogs();
-        
-        dogsNames.AddRange(dogsFromRepository.Select(x => x.Name));
-        dogsNames.AddRange(dogsFromService.Select(x => x.Name));
-        
-        return Ok(dogsNames);
+        return Ok(this.dogService.FetchDogs());
     }
     
     public IActionResult Privacy()
